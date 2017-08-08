@@ -1,7 +1,7 @@
 <div>
     <div>iiiii</div>
     <div>
-        {{name}}
+        {{name | timestamp}}
     </div>
     <div>
         {{!name ? age: height}}

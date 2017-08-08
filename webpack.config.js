@@ -9,7 +9,9 @@ let dist =path.resolve(__dirname,"dist")
 module.exports = {
   entry: {
     art: './src/main.js',
-    page: './src/layout.js'
+    page: './src/layout.js',
+    art1: './src/main1.js',
+    art2: './src/main2.js'
   },
   output:{
     path: dist,
@@ -19,8 +21,7 @@ module.exports = {
   resolve: {
     extensions: ['.js','.json'],
     alias: {
-      'jquery': 'jquery/src/jquery',
-      'art-template': 'art-template/lib/template-web.js'
+      'jquery': 'jquery/src/jquery'
     }
   },
   module: {
@@ -77,6 +78,20 @@ module.exports = {
       filename: 'page.html',
       template: path.resolve(__dirname, './src/page.art'),
       chunks: ['page', 'vendor'],
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      title:"art1",
+      filename: 'index1.html',
+      template: path.resolve(__dirname, './src/index1.art'),
+      chunks: ['art1', 'vendor'],
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      title:"art2",
+      filename: 'index2.html',
+      template: path.resolve(__dirname, './src/index2.art'),
+      chunks: ['art2', 'vendor'],
       inject: true
     }),
     new OpenBrowserPlugin({url: 'http://localhost:5000/'}),

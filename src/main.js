@@ -1,12 +1,13 @@
 /**
  * Created by txl-pc on 2017/8/6.
  */
+// require('./main_filter')
 import $ from 'jquery'
-import template from 'art-template'
+// import template from 'art-template/lib/template-web'
+import template from './main_filter'
 import art1 from './art/art1.art'
 import art2 from './art/art2.html'
 import art3 from './art/art3.html'
-// let render1 = template.compile(art1)
 let html1 = art1({
   name: '小胖',
   age: 18,
