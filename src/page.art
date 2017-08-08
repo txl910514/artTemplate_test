@@ -1,0 +1,12 @@
+{{extend './layout.art'}}
+
+{{block 'content'}}
+{{set temp = {
+    name: '小胖',
+    age: 18,
+    height: 183,
+    'honme list': 'shijicheng'
+} }}
+    {{include './art/header.art'}}
+    {{include './art/art1.art' temp}}
+{{/block}}

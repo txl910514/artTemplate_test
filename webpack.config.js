@@ -8,7 +8,8 @@ let webpack = require('webpack')
 let dist =path.resolve(__dirname,"dist")
 module.exports = {
   entry: {
-    main: './src/main.js'
+    art: './src/main.js',
+    page: './src/layout.js'
   },
   output:{
     path: dist,
@@ -66,7 +67,17 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title:"art",
-      template: path.resolve(__dirname, './src/index.art')
+      filename: 'index.html',
+      template: path.resolve(__dirname, './src/index.art'),
+      chunks: ['art', 'vendor'],
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      title:"page",
+      filename: 'page.html',
+      template: path.resolve(__dirname, './src/page.art'),
+      chunks: ['page', 'vendor'],
+      inject: true
     }),
     new OpenBrowserPlugin({url: 'http://localhost:5000/'}),
     new webpack.optimize.CommonsChunkPlugin({
