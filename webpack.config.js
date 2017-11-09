@@ -4,6 +4,7 @@
 let path = require('path')
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let webpack = require('webpack')
 let dist =path.resolve(__dirname,"dist")
 module.exports = {
@@ -11,7 +12,8 @@ module.exports = {
     art: './src/main.js',
     page: './src/layout.js',
     art1: './src/main1.js',
-    art2: './src/main2.js'
+    art2: './src/main2.js',
+    slick: './src/slick.js'
   },
   output:{
     path: dist,
@@ -34,8 +36,40 @@ module.exports = {
         }]
       },
       {
+        test: /\.css$/,
+        exclude: /(bower_components)/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                sourceMap: false
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'img/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'fonts/[name].[hash:7].[ext]'
+        }
+      },
+      {
         test: /\.html/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(bower_components)/,
         use:[{
           loader: 'html-loader'
         }]
@@ -67,6 +101,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title:"slick",
+      filename: 'slick.html',
+      template: path.resolve(__dirname, './src/slick.art'),
+      chunks: ['slick', 'vendor'],
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
       title:"art",
       filename: 'index.html',
       template: path.resolve(__dirname, './src/index.art'),
@@ -94,6 +135,7 @@ module.exports = {
       chunks: ['art2', 'vendor'],
       inject: true
     }),
+    new ExtractTextPlugin('style.css'),
     new OpenBrowserPlugin({url: 'http://localhost:5000/'}),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
